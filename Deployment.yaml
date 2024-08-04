@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rajni
+  namespace: default
+  labels:
+    app: rajni
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rajni
+  template:
+    metadata:
+      labels:
+        app: rajni
+    spec:
+      containers:
+      - name: rajni
+        image: us-central1-docker.pkg.dev/GOOGLE_PROJECT/demo/rajni:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rajni-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: rajni
+  ports:
+  - port: 80
+    targetPort: 80
